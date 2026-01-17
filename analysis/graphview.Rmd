@@ -1,0 +1,64 @@
+---
+title: "Graph View"
+author: "Jihee You"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(htmltools)
+
+# --- CONFIGURATION ---
+default_img <- "assets/practice_smile.jpg" 
+
+# --- DEFINE POSTS ---
+posts <- list(
+  list(
+    title = "Practice",
+    file = "Practice.html",
+    img = "assets/practice_smile.jpg", 
+    desc = "First RMD file to test",
+    tags = c("Random")
+  )
+)
+
+# --- GENERATE HTML ---
+card_list <- lapply(posts, function(post) {
+  
+  # 1. Handle Image Logic
+  # TYPO CHECK: Ensure this says 'post$img', not 'ptaost$img'
+  img_src <- ifelse(is.null(post$img) || post$img == "", default_img, post$img)
+  
+  # 2. Handle Tags Logic
+  tag_badges <- if (!is.null(post$tags)) {
+    lapply(post$tags, function(tag) {
+      tags$span(class = "post-badge", tag)
+    })
+  } else {
+    NULL
+  }
+  
+  # 3. Build the Card Object
+  tags$a(
+    href = post$file, 
+    class = "post-card",
+    tags$img(
+      src = img_src, 
+      class = "post-image", 
+      onerror = sprintf("this.onerror=null; this.src='%s';", default_img)
+    ),
+    tags$div(
+      class = "post-content",
+      tags$div(class = "post-title", post$title),
+      tags$p(class = "post-description", post$desc),
+      tags$div(class = "badge-container", tag_badges)
+    )
+  )
+})
+
+tagList(card_list)
+```
