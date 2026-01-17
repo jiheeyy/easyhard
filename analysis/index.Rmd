@@ -98,7 +98,9 @@ Whether the content is correct follows a binomial distribution with $p < 1$, so 
 
 <div class="post-container">
 
-```{r, echo=FALSE, results='asis'}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(htmltools)
+
 # --- CONFIGURATION ---
 default_img <- "assets/practice_smile.png" 
 
@@ -107,37 +109,47 @@ posts <- list(
   list(
     title = "Practice",
     file = "Practice.html",
-    img = "assets/practice_smile.jpg", # Ensure this file exists in docs/assets/
+    img = "assets/practice_smile.jpg", 
     desc = "First RMD file to test",
     tags = c("Random")
   )
 )
 
-# --- GENERATE HTML ---
-for (post in posts) {
+# --- GENERATE HTML (Using htmltools) ---
+card_list <- lapply(posts, function(post) {
   
-  # Logic: Use default image if none provided
+  # 1. Handle Image Logic
   img_src <- ifelse(is.null(post$img) || post$img == "", default_img, post$img)
   
-  # Logic: Build HTML for tags
-  tags_html <- ""
-  if (!is.null(post$tags)) {
-    for (tag in post$tags) {
-      tags_html <- paste0(tags_html, sprintf('<span class="post-badge">%s</span>', tag))
-    }
+  # 2. Handle Tags Logic
+  tag_badges <- if (!is.null(post$tags)) {
+    lapply(post$tags, function(tag) {
+      tags$span(class = "post-badge", tag)
+    })
+  } else {
+    NULL
   }
   
-  # Print the Card HTML
-  cat(sprintf('
-  <a href="%s" class="post-card">
-    <img src="%s" class="post-image" onerror="this.onerror=null; this.src=\'%s\';">
-    <div class="post-content">
-      <div class="post-title">%s</div>
-      <p class="post-description">%s</p>
-      <div class="badge-container">%s</div>
-    </div>
-  </a>
-  ', post$file, img_src, default_img, post$title, post$desc, tags_html))
-}
+  # 3. Build the Card Object
+  tags$a(
+    href = post$file, 
+    class = "post-card",
+    tags$img(
+      src = img_src, 
+      class = "post-image", 
+      # JavaScript fallback for broken images
+      onerror = sprintf("this.onerror=null; this.src='%s';", default_img)
+    ),
+    tags$div(
+      class = "post-content",
+      tags$div(class = "post-title", post$title),
+      tags$p(class = "post-description", post$desc),
+      tags$div(class = "badge-container", tag_badges)
+    )
+  )
+})
+
+# 4. Output the result
+tagList(card_list)
 ```
 </div>
