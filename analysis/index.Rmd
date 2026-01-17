@@ -100,11 +100,9 @@ Whether the content is correct follows a binomial distribution with $p < 1$, so 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(htmltools)
-
-# --- CONFIGURATION ---
 default_img <- "assets/practice_smile.png" 
 
-# --- DEFINE YOUR POSTS HERE ---
+# --- DEFINE POSTS LIST HERE ---
 posts <- list(
   list(
     title = "Practice",
