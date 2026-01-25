@@ -105,19 +105,19 @@ default_img <- "assets/practice_smile.jpg"
 # --- DEFINE POSTS LIST HERE ---
 posts <- list(
   list(
-    title = "ELBO before it got the name",
-    file = "elbo_before.html",
-    img = default_img,
-    desc = "Relate ELBO in variational inference to autoencoder network objective",
-    tags = c("Statistics")
-  ),
-  list(
     title = "Bayes in action: Gamma-Poisson Model",
     file = "gamma_poi.html",
     img = "assets/gampois.png",
     desc = "Poisson likelihood comes with Gamma prior and posterior, as well as NB marginal",
     tags = c("Statistics")
-  )
+  ),
+  list(
+    title = "ELBO before it got the name",
+    file = "elbo_before.html",
+    img = default_img,
+    desc = "Relate ELBO in variational inference to autoencoder network objective",
+    tags = c("Statistics")
+  ) 
 )
 
 # --- GENERATE HTML (Using htmltools) ---
