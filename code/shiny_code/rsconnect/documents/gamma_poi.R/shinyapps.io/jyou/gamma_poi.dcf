@@ -1,0 +1,12 @@
+name: gamma_poi
+title: gamma_poi
+username: jyou
+account: jyou
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 16505235
+bundleId: 11492049
+url: https://jyou.shinyapps.io/gamma_poi/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
